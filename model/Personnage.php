@@ -6,6 +6,11 @@ class Personnage {
     private $_localisation  = '';
     private $_experience = 0;
     private $_degats = 0;
+    
+    //Static attributes
+    const FORCE_PETITE = 25;
+    const FORCE_MOYENNE = 50;
+    const FORCE_GRANDE = 75;
 
     
     // Getters
@@ -27,12 +32,8 @@ class Personnage {
     
     // Setters
     public function setForce($force){
-        //Test pour vérifier si le paramètre entier est un entier
-        if(!is_int($force)) {
-            trigger_error('La force doit être un nombre entier. Saississez une valeur entière', E_USER_WARNING);
-            return;
-        }
-        else {
+        
+        if(in_array($force, [self::FORCE_PETITE, self::FORCE_MOYENNE, self::FORCE_GRANDE])) {
             $this -> _force = $force;
         }
     }

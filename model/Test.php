@@ -16,3 +16,4 @@ for($i=1; $i<11; $i++) {
     echo '<p/>';
 }
 echo $victime -> degats();
+Personnage::menacer();

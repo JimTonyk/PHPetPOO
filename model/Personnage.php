@@ -7,10 +7,13 @@ class Personnage {
     private $_experience = 0;
     private $_degats = 0;
     
-    //Static attributes
+    //Contants attributes
     const FORCE_PETITE = 25;
     const FORCE_MOYENNE = 50;
     const FORCE_GRANDE = 75;
+    
+    //Private static attribute
+    private static $_texteDeMenace = 'Je vais vous écraser !!!';
 
     
     // Getters
@@ -68,6 +71,10 @@ class Personnage {
         else {
             $this -> _degats = $degats;
         }
+    }
+    
+    public static function menacer(){
+        echo self::$_texteDeMenace;
     }
     
      //Constructor

@@ -88,7 +88,7 @@ class Character {
     }
     
      //Constructor
-    public function __construct($name='', $strength = 0, $damage = 0, $level = 1, $experience = 0) {
+    public function __construct($name='default', $strength = 0, $damage = 0, $level = 1, $experience = 0) {
         $this->setName($name);
         $this->setStrength($strength);
         $this->setDamage($damage);

@@ -28,10 +28,11 @@ class CharacterManager {
 
     public function read($id) {
         //TODO: read a Character using its id as argument
-        $id = (int) $id;
+        $idSelect = (int) $id;
        
         $request = $this->_db->prepare('SELECT heroname, strength, damage, herolevel, experience FROM characters WHERE id = ?');
-        $hero = $request->execute(array($id));
+        $request->execute(array($idSelect));
+        $hero = $request->fetch();
 
         return new Character($hero);
 
@@ -39,6 +40,14 @@ class CharacterManager {
 
     public function readAll() {
         //TODO: read All characters from DB
+        $characters = [];
+
+        $request = $this->_db->query('SELECT heroname, strength, damage, herolevel, experience FROM characters');
+        while ($data = $request->fetch()) {
+            $characters[] = new Character($data);
+        }
+        
+        return $characters;
     }
 
     public function update(Character $hero) {

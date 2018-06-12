@@ -134,6 +134,8 @@ class Personnage {
     }
     
     public function hydate(array $data) {
+        /*
+         * Version longue pour hydrater chaque champ un à un
         if (isset($data['id'])) {
             $this->setId($data['id']);
         }
@@ -156,6 +158,22 @@ class Personnage {
         
         if (isset($data['experience'])) {
             $this->setExperience($data['experience']);
+        }
+         * 
+         */
+        
+        //Version plus rapide si tous les champs ne sont pas remplis
+        foreach ($data as $key => $value) {
+            //Crée une chaine de caractère pour réaliser le nom du setter à appeller "setAttribute"
+            $method = 'set'.ucfirst($key);
+            
+            /* 
+             * Si la méthode existe, lance le setter avec la valeur donnée
+             * Attention : les contrôles sont déjà réalisés dans les setters
+             */
+            if (method_exists($this, $method)) {
+                $this->$method($value);
+            }
         }
     }
     

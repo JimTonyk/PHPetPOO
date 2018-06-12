@@ -1,6 +1,6 @@
 <?php
 
-class Personnage {
+class Character {
     //Attributes
     private $_id='';
     private $_name="";
@@ -119,7 +119,7 @@ class Personnage {
         echo $this ->_name.' has moved to '.$this->_level;
     }
     
-    public function hit(Personnage $personnage) {
+    public function hit(Character $personnage) {
         $personnage -> _damage += $this -> _strength;
         echo $personnage->_name.' has received '.$this->_damage.' by '.$this->_name;
     }

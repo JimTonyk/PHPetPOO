@@ -1,5 +1,4 @@
 <?php
-namespace org\formation\php\model;
 
 class Personnage {
     //Attributes

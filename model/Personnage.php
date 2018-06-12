@@ -5,18 +5,12 @@ class Personnage {
     private $_id='';
     private $_name="";
     private $_strength = 0;
-    private $_place  = '';
-    private $_experience = 0;
     private $_damage = 0;
-    
-    //Contants attributes
-    const FORCE_PETITE = 25;
-    const FORCE_MOYENNE = 50;
-    const FORCE_GRANDE = 75;
+    private $_experience = 0;
+    private $_level  = '';
     
     //Private static attribute
     private static $_texteDeMenace = 'Je vais vous écraser !!!';
-
     
     // Getters
     public function id() {
@@ -35,8 +29,8 @@ class Personnage {
         return $this -> _damage;
     }
     
-    public function place() {
-        return $this -> _place;
+    public function level() {
+        return $this -> _level;
     }
     
     public function strength() {
@@ -64,20 +58,23 @@ class Personnage {
     }
     
     public function setStrength($strength){
-        
-        if(in_array($strength, [self::FORCE_PETITE, self::FORCE_MOYENNE, self::FORCE_GRANDE])) {
-            $this -> _strength = $strength;
+        $str = (int) $strength;
+        if($str <0 or $str >100) {
+            trigger_error('La force doit être un nombre entier compris entre 0 et 100. Vérifiez la valeur', E_USER_WARNING);
+        }
+        else {
+            $this->_strength = $str;
         }
     }
     
-    public function setPlace($place){
+    public function setLevel($level){
         //Test pour vérifier si le paramètre entier est un entier
-        if(!is_string($place)) {
-            trigger_error('La place doit être un texte. Saississez une ville non numérique', E_USER_WARNING);
+        if(!is_string($level)) {
+            trigger_error('La level doit être un texte. Saississez une ville non numérique', E_USER_WARNING);
             return;
         }
         else {
-            $this -> _place = $place;
+            $this -> _level = $level;
         }
     }
     
@@ -108,26 +105,26 @@ class Personnage {
     }
     
      //Constructor
-    public function __construct($name='', $strength = 0, $place = '', $damage = 0) {
+    public function __construct($name='', $strength = 0, $level = '', $damage = 0) {
         $this ->setName($name);
         $this -> setStrength($strength);
-        $this -> setLocalisation($place);
+        $this -> setLevel($level);
         $this -> setDamage($damage);
         $this -> _experience = 0;
     }
     
     //Methods
-    public function move($newPlace) {
-        $this->setPlace($newPlace);
-        echo $this ->_name.' has moved to '.$this->_place;
+    public function move($newlevel) {
+        $this->setlevel($newlevel);
+        echo $this ->_name.' has moved to '.$this->_level;
     }
     
-    public function frapper(Personnage $personnage) {
+    public function hit(Personnage $personnage) {
         $personnage -> _damage += $this -> _strength;
         echo $personnage->_name.' has received '.$this->_damage.' by '.$this->_name;
     }
     
-    public function gagnerExperience() {
+    public function earnExperience() {
         $this->setExperience($this -> _experience++);
         echo $this->_name.' has '.$this->_experience.' experience points.';
     }
@@ -147,8 +144,8 @@ class Personnage {
             $this->setStrength($data['strength']);
         }
         
-        if (isset($data['place'])) {
-            $this->setPlace($data['place']);
+        if (isset($data['level'])) {
+            $this->setlevel($data['level']);
         }
         
         if (isset($data['damage'])) {

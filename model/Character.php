@@ -6,8 +6,8 @@ class Character {
     private $_name="";
     private $_strength = 0;
     private $_damage = 0;
-    private $_experience = 0;
     private $_level  = '';
+    private $_experience = 0;
     
     //Private static attribute
     private static $_texteDeMenace = 'Je vais vous écraser !!!';
@@ -40,7 +40,7 @@ class Character {
     // Setters
     public function setId($id) {
         $idCast = (int) $id;
-        if ($idCast > 0) {
+        if ($idCast >= 0) {
             $this->_id = $idCast;
         }
         else {
@@ -49,53 +49,36 @@ class Character {
     }
     
     public function setName($name) {
-        if(is_string($name)) {
+        if (is_string($name) AND strlen($name)<20) {
             $this->_name = $name;
-        }
-        else {
-            trigger_error('Le nom doit être une chaîne de caractères. Vérifiez la saisie', E_USER_WARNING);
         }
     }
     
     public function setStrength($strength){
         $str = (int) $strength;
-        if($str <0 or $str >100) {
-            trigger_error('La force doit être un nombre entier compris entre 0 et 100. Vérifiez la valeur', E_USER_WARNING);
-        }
-        else {
+        if($str > 0) {
             $this->_strength = $str;
         }
     }
     
     public function setLevel($level){
-        //Test pour vérifier si le paramètre entier est un entier
-        if(!is_string($level)) {
-            trigger_error('La level doit être un texte. Saississez une ville non numérique', E_USER_WARNING);
-            return;
+        $lvl = (int) $level;
+        if($lvl > 0) {
+            $this->_level = $lvl;
         }
-        else {
-            $this -> _level = $level;
-        }
+        
     }
     
       public function setExperience($experience){
         //Test pour vérifier si le paramètre entier est un entier
         $xp = (int) $experience;
-          if($xp<0 or $xp > 100) {
-            trigger_error('L\'expérience doit être un nombre entier inférieur compris entre 0 et 100. Saississez une valeur entière', E_USER_WARNING);
-            return;
-        }
-        else {
+          if($xp>= 0) {
             $this -> _experience = $xp;
-        }
+          }
     }
     public function setDamage($damage){
         //Test pour vérifier si le paramètre entier est un entier
         if(!is_int($damage) and $damage <= 100) {
-            trigger_error('L\'expérience doit être un nombre entier inférieur ou égal à 100. Saississez une valeur entière', E_USER_WARNING);
-            return;
-        }
-        else {
             $this -> _damage = $damage;
         }
     }
@@ -105,12 +88,12 @@ class Character {
     }
     
      //Constructor
-    public function __construct($name='', $strength = 0, $level = '', $damage = 0) {
-        $this ->setName($name);
-        $this -> setStrength($strength);
-        $this -> setLevel($level);
-        $this -> setDamage($damage);
-        $this -> _experience = 0;
+    public function __construct($name='', $strength = 0, $damage = 0, $level = 1, $experience = 0) {
+        $this->setName($name);
+        $this->setStrength($strength);
+        $this->setDamage($damage);
+        $this->setLevel($level);
+        $this->setExperience($experience);
     }
     
     //Methods
